@@ -1,5 +1,5 @@
 var request = require('request');
-var secrets = require('secrets');
+var secrets = require('./secrets');
 
 function getRepoContributors(repoOwner, repoName, cb) {
    var options = {
@@ -10,11 +10,16 @@ function getRepoContributors(repoOwner, repoName, cb) {
      }
    };
    request(options, (err, res, body) => {
-    cb(err,body);
+    var jsonData = JSON.parse(body);
+    cb(err,jsonData);
    });
 }
 
 getRepoContributors("jquery", "jquery", function(err, result) {
   console.log("Errors:", err);
-  console.log("Result:", result);
+  // console.log("result:", result);
+  result.forEach(function(contributor) {
+    console.log(contributor.avatar_url);
+  });
+  // console.log("Result:", result);
 });
