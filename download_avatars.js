@@ -1,4 +1,5 @@
 var request = require('request');
+var fs = require('fs');
 var secrets = require('./secrets');
 
 function getRepoContributors(repoOwner, repoName, cb) {
@@ -15,11 +16,23 @@ function getRepoContributors(repoOwner, repoName, cb) {
    });
 }
 
-getRepoContributors("jquery", "jquery", function(err, result) {
-  console.log("Errors:", err);
-  // console.log("result:", result);
-  result.forEach(function(contributor) {
-    console.log(contributor.avatar_url);
-  });
-  // console.log("Result:", result);
-});
+// getRepoContributors("jquery", "jquery", function(err, result) {
+//   console.log("Errors:", err);
+//   result.forEach(function(contributor) {
+//     console.log(contributor.avatar_url);
+//   });
+// });
+
+
+function downloadImageByURL(url, filePath) {
+  request.get(url)
+         .on('error', function(err) {
+          throw err;
+         })
+         .on('response', function () {
+          console.log('stream is on');
+         })
+         .pipe(fs.createWriteStream(filePath));
+}
+
+downloadImageByURL("https://avatars2.githubusercontent.com/u/2741?v=3&s=466", "avatars/kvirani2.jpg")
