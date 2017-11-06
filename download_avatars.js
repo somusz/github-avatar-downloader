@@ -1,3 +1,6 @@
 var request = require('request');
 
-console.log('hej!');
+function getRepoContributors(repoOwner, repoName, cb) {
+
+}
+
