@@ -2,6 +2,9 @@ var request = require('request');
 var fs = require('fs');
 var secrets = require('./secrets');
 
+var owner = process.argv[2];
+var repo = process.argv[3];
+
 function getRepoContributors(repoOwner, repoName, cb) {
    var options = {
      url: "https://api.github.com/repos/" + repoOwner + "/" + repoName + "/contributors",
@@ -33,5 +36,5 @@ function downloadImageByURL(url, filePath) {
          .pipe(fs.createWriteStream(filePath));
 }
 
-getRepoContributors("jquery", "jquery", downloadImageByURL);
+getRepoContributors(owner, repo, downloadImageByURL);
 
