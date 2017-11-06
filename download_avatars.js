@@ -2,8 +2,13 @@ var request = require('request');
 var fs = require('fs');
 var secrets = require('./secrets');
 
+if (process.argv[2] && process.argv[3]) {
 var owner = process.argv[2];
 var repo = process.argv[3];
+} else {
+  console.log('Please provide a valid Github repo owner id and a valid repo name.');
+  return;
+}
 
 function getRepoContributors(repoOwner, repoName, cb) {
    var options = {
