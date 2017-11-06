@@ -11,19 +11,16 @@ function getRepoContributors(repoOwner, repoName, cb) {
      }
    };
    request(options, (err, res, body) => {
+    if (err) {
+      console.log("Errors:", err);
+    };
     var jsonData = JSON.parse(body);
-    cb(err,jsonData);
+    jsonData.forEach(function(contributor) {
+      var theFilePath = 'avatars/' + contributor.login + ".jpg";
+      cb(contributor.avatar_url,theFilePath);
+    })
    });
 }
-
-getRepoContributors("jquery", "jquery", function(err, result) {
-  if (err) { console.log("Errors:", err); }
-  result.forEach(function(contributor) {
-    var theFilePath = 'avatars/' + contributor.login + ".jpg";
-    downloadImageByURL(contributor.avatar_url,theFilePath);
-  });
-});
-
 
 function downloadImageByURL(url, filePath) {
   request.get(url)
@@ -35,4 +32,6 @@ function downloadImageByURL(url, filePath) {
          })
          .pipe(fs.createWriteStream(filePath));
 }
+
+getRepoContributors("jquery", "jquery", downloadImageByURL);
 
