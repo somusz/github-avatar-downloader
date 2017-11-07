@@ -1,3 +1,4 @@
+process.env
 secrets.js
 # Logs
 logs
@@ -57,3 +58,4 @@ typings/
 
 # dotenv environment variables file
 .env
+
